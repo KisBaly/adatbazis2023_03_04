@@ -50,3 +50,76 @@ SELECT v.nev
 from jegy j right join vendeg v on v.id = j.vendegId 
 where j.vendegId is null
 
+
+
+
+SELECT v.nev
+from vendeg v 
+where v.id not in (
+	SELECT DISTINCT j.vendegId
+	from jegy j
+)
+
+select v.nev from vendeg v left join jegy j on v.id = j.vendegId
+where j.vendegId is null
+
+select v.nev from jegy j  right join vendeg v on v.id = j.vendegId
+where j.vendegId is null
+
+
+
+--Írjuk ki azokat a filmeket amir még nem vettek jegyet
+
+SELECT f.cim
+FROM film f
+where f.id not in (
+SELECT DISTINCT
+v.filmid
+from vetites v
+)
+
+select f.cim from film f left join vetites v on v.filmid = f.id 
+where v.id is null
+
+
+
+select f.cim from vetites v right join film f on v.filmid = f.id 
+where v.id is null
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
