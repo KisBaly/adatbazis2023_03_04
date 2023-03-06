@@ -1,0 +1,52 @@
+--1. feladat szurjuk be magunk vendegkent
+
+insert into vendeg(nev) VALUES("Bujdoso Balint");
+
+
+--2.feladat szurjunk be egy uj filmet
+
+insert into film values(
+(
+	SELECT MAX(f.id)+1
+	from film f
+	
+),"Jónás",4,5000)
+
+
+
+--3.szurjunk be egy uj filmtipust
+insert INTO filmtipus VALues(null,"Lapát");
+
+
+--irjuk ki azokat a filmtipusokat amikhez nem rendeltek filmet
+SELECT ft.nev from fimtipus ft where ft.id not in(
+SELECT f.filmtipusid
+from film f, filmtipus ft
+where f.filmtipusid = ft.id
+
+);
+select ft.nev
+	from filmtipus ft 
+		left join film f on ft.id = f.filmtipusid
+where f.cim is null
+
+
+--írjuk ki azokat a vendegeket akik meg nwem vettek jegyet
+
+SELECT v.nev
+from vendeg v 
+where v.nev not in 
+(
+	SELECT v.nev
+from vendeg v, jegy j
+where v.id = j.vendegId 
+)
+
+SELECT v.nev
+from vendeg v left join jegy j on v.id = j.vendegId 
+where j.vendegId is null
+
+SELECT v.nev
+from jegy j right join vendeg v on v.id = j.vendegId 
+where j.vendegId is null
+
